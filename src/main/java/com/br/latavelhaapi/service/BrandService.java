@@ -14,7 +14,7 @@ public class BrandService {
     private BrandRepository brandRepository;
 
     //ADD
-    public Object add(Brand brand){
+    public Brand add(Brand brand){
         return brandRepository.save(brand);
     }
 
@@ -31,7 +31,7 @@ public class BrandService {
     }
 
     //Atualizar
-    public Object update(Brand brand){
+    public Brand update(Brand brand){
         return brandRepository.save(brand);
     }
 }
