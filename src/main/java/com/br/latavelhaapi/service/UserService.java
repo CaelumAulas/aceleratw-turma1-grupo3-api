@@ -14,17 +14,14 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    //ADD
     public Object add(User user){
         return userRepository.save(user);
     }
 
-    //List
     public List<User> list(){
         return userRepository.findAll();
     }
 
-    //Deletar
     public void delete(long id){
         User user = userRepository.findByID(id);
         if(user != null){
@@ -32,16 +29,11 @@ public class UserService {
         }
     }
 
-    //Atualizar
     public User update(User user){
         return userRepository.save(user);
     }
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
-    }
-
-    public User findById(long id) {
-        return userRepository.findByID(id);
     }
 }

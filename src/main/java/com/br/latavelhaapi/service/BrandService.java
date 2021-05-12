@@ -13,24 +13,20 @@ public class BrandService {
     @Autowired
     private BrandRepository brandRepository;
 
-    //ADD
     public Brand add(Brand brand){
         return brandRepository.save(brand);
     }
 
-    //List
     public List<Brand> list(){
         return brandRepository.findAll();
     }
 
-    //Deletar
     public Brand delete(long id){
         Brand brand = brandRepository.findByID(id);
         brandRepository.delete(brand);
         return brand;
     }
 
-    //Atualizar
     public Brand update(Brand brand){
         return brandRepository.save(brand);
     }
