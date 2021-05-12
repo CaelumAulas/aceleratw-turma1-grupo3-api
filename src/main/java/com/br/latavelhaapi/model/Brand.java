@@ -1,15 +1,14 @@
-package com.br.latavelhaapi.model.DTO;
+package com.br.latavelhaapi.model;
 
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table(name="users")
-public class User implements Serializable {
+@Table(name = "brands")
+public class Brand implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -19,16 +18,12 @@ public class User implements Serializable {
 
     @Column
     @NotNull
-    @Size(max=100)
+    @Size(max = 50)
     private String name;
 
-    @Column
-    @Email
-    private String email;
+    public Brand(){
 
-    @Column
-    @NotNull
-    private String password;
+    }
 
     public Long getID() {
         return ID;
@@ -44,21 +39,5 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }
