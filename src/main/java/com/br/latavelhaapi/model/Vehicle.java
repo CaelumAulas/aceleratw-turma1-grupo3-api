@@ -1,4 +1,4 @@
-package com.br.latavelhaapi.model.DTO;
+package com.br.latavelhaapi.model;
 
 import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,7 +25,7 @@ public class Vehicle implements Serializable {
     private String model;
 
     @OneToOne
-    private Brand brand_id;
+    private Brand brand;
 
     @Column
     @NotNull
@@ -34,6 +34,10 @@ public class Vehicle implements Serializable {
     @DateTimeFormat
     @NotNull
     private Date year;
+
+    public Vehicle(){
+
+    }
 
     public Long getID() {
         return ID;
@@ -51,12 +55,12 @@ public class Vehicle implements Serializable {
         this.model = model;
     }
 
-    public Brand getBrand_id() {
-        return brand_id;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public void setBrand_id(Brand brand_id) {
-        this.brand_id = brand_id;
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
     public BigDecimal getPrice() {
