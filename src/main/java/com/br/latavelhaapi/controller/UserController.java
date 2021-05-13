@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public User update(@PathVariable long id, @RequestBody @Valid UserForm userForm){
-            User user = userForm.convert(userService);
+        User user = userForm.convert(userService);
         return userService.update(user);
     }
 }

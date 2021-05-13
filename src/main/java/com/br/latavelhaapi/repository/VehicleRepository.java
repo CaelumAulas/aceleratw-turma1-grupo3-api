@@ -17,4 +17,6 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     List<Vehicle> findByModel(String model);
 
     List<Vehicle> findByBrandID(long id);
+
+    Vehicle findByYear(String year);
 }

@@ -1,19 +1,15 @@
 package com.br.latavelhaapi.controller;
 
 import com.br.latavelhaapi.model.Brand;
-import com.br.latavelhaapi.model.DTO.UserDTO;
-import com.br.latavelhaapi.model.DTO.UserForm;
-import com.br.latavelhaapi.model.User;
 import com.br.latavelhaapi.service.BrandService;
-import com.br.latavelhaapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/brands")
+@CrossOrigin(origins = "http://localhost:3000")
 public class BrandController {
 
     @Autowired
