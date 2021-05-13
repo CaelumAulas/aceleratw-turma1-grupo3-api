@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BrandService {
@@ -21,13 +22,15 @@ public class BrandService {
         return brandRepository.findAll();
     }
 
-    public Brand delete(long id){
-        Brand brand = brandRepository.findByID(id);
-        brandRepository.delete(brand);
-        return brand;
+    public void delete(long id){
+        brandRepository.deleteById(id);
     }
 
     public Brand update(Brand brand){
         return brandRepository.save(brand);
+    }
+
+    public Optional<Brand> findById(Long id) {
+        return brandRepository.findById(id);
     }
 }
