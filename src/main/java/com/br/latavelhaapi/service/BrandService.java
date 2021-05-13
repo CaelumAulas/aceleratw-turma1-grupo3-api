@@ -22,15 +22,22 @@ public class BrandService {
         return brandRepository.findAll();
     }
 
-    public void delete(long id){
-        brandRepository.deleteById(id);
+    public Brand delete(long id){
+        Brand brand = brandRepository.findByID(id);
+        brandRepository.delete(brand);
+        return brand;
     }
 
     public Brand update(Brand brand){
         return brandRepository.save(brand);
     }
 
+    public boolean existsByName(String name) {
+        return brandRepository.existsByName(name);
+    }
+
     public Optional<Brand> findById(Long id) {
         return brandRepository.findById(id);
     }
+
 }
