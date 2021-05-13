@@ -1,6 +1,5 @@
 package com.br.latavelhaapi.controller;
 
-import com.br.latavelhaapi.model.DTO.VehicleDTO;
 import com.br.latavelhaapi.model.DTO.VehicleForm;
 import com.br.latavelhaapi.model.Vehicle;
 import com.br.latavelhaapi.service.VehicleService;
@@ -26,9 +25,9 @@ public class VehicleController {
     }
 
     @GetMapping
-    public List<VehicleDTO> list(){
+    public List<Vehicle> list(){
         List<Vehicle> vehicles = vehicleService.list();
-        return VehicleDTO.convert(vehicles);
+        return vehicles;
     }
 
     @DeleteMapping("/{id}")

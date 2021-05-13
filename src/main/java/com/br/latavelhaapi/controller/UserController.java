@@ -1,6 +1,5 @@
 package com.br.latavelhaapi.controller;
 
-import com.br.latavelhaapi.model.DTO.UserDTO;
 import com.br.latavelhaapi.model.DTO.UserForm;
 import com.br.latavelhaapi.model.User;
 import com.br.latavelhaapi.service.UserService;
@@ -26,9 +25,9 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserDTO> list(){
+    public List<User> list(){
         List<User> users = userService.list();
-        return UserDTO.convert(users);
+        return users;
     }
 
     @DeleteMapping("/{id}")
