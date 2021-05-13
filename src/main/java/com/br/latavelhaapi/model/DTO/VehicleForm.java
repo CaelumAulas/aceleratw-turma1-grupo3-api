@@ -1,23 +1,17 @@
-package com.br.latavelhaapi.model;
+package com.br.latavelhaapi.model.DTO;
 
+import com.br.latavelhaapi.model.Brand;
+import com.br.latavelhaapi.model.Vehicle;
+import com.br.latavelhaapi.service.VehicleService;
 import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
-@Entity
-@Table(name = "vehicles")
-public class Vehicle implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
+public class VehicleForm {
 
     @Column
     @NotNull
@@ -34,25 +28,6 @@ public class Vehicle implements Serializable {
     @DateTimeFormat
     @NotNull
     private String year;
-
-    public Vehicle(){
-
-    }
-
-    public Vehicle(String model, Brand brand, BigDecimal price, String year) {
-        this.model = model;
-        this.brand = brand;
-        this.price = price;
-        this.year = year;
-    }
-
-    public Long getID() {
-        return ID;
-    }
-
-    public void setID(Long ID) {
-        this.ID = ID;
-    }
 
     public String getModel() {
         return model;
@@ -84,5 +59,11 @@ public class Vehicle implements Serializable {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    //Verificar um ponto unico sem ser o id
+    public Vehicle convert(VehicleService vehicleService){
+        Vehicle vehicle = vehicleService.findByYear(year);
+        return new Vehicle(model,brand,price,year);
     }
 }

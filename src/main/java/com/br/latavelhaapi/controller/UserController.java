@@ -38,7 +38,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public User update(@PathVariable long id, @RequestBody @Valid UserForm userForm){
-            User user = userForm.convert(userService);
+        User user = userForm.convert(userService);
         return userService.update(user);
     }
 }

@@ -29,7 +29,7 @@ public class VehicleService {
         }
     }
 
-    public Object update(Vehicle vehicle){
+    public Vehicle update(Vehicle vehicle){
         return vehicleRepository.save(vehicle);
     }
 
@@ -43,5 +43,9 @@ public class VehicleService {
 
     public List<Vehicle> listByBrand(long id){
         return vehicleRepository.findByBrandID(id);
+    }
+
+    public Vehicle findByYear(String year) {
+        return vehicleRepository.findByYear(year);
     }
 }
