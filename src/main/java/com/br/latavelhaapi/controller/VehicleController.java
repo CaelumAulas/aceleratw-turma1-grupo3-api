@@ -1,6 +1,7 @@
 package com.br.latavelhaapi.controller;
 
 import com.br.latavelhaapi.model.DTO.VehicleForm;
+import com.br.latavelhaapi.model.User;
 import com.br.latavelhaapi.model.Vehicle;
 import com.br.latavelhaapi.payload.Response;
 import com.br.latavelhaapi.service.VehicleService;
@@ -55,8 +56,15 @@ public class VehicleController {
     }
 
     @PutMapping("/{id}")
-    public Vehicle update(@PathVariable long id, @RequestBody @Valid VehicleForm vehicleForm){
-        Vehicle vehicle = vehicleForm.convert(vehicleService);
-        return vehicleService.update(vehicle);
+    public ResponseEntity<?> update(@RequestBody Vehicle vehicle, @PathVariable("id") Long id) {
+        Optional<Vehicle> findVehicle = vehicleService.findById(id);
+        if(findVehicle.isPresent()){
+            vehicle.setID(findVehicle.get().getID());
+            vehicleService.update(vehicle);
+            return new ResponseEntity<Vehicle>(findVehicle.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(
+                new Response(false, "Not found user with id: " + id),
+                HttpStatus.NOT_FOUND);
     }
 }
