@@ -45,7 +45,7 @@ public class VehicleController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Returns the list vehicles", response = Response.class),
             @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
-            @ApiResponse(code = 404, message = "User not found", response = Response.class),
+            @ApiResponse(code = 404, message = "Vehicle not found", response = Response.class),
             @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
     })
     @GetMapping
@@ -64,7 +64,7 @@ public class VehicleController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Returns the a vehicle deleted", response = Response.class),
             @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
-            @ApiResponse(code = 404, message = "User not found", response = Response.class),
+            @ApiResponse(code = 404, message = "Vehicle not found", response = Response.class),
             @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
     })
     @DeleteMapping("/{id}")
@@ -83,7 +83,7 @@ public class VehicleController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Return the vehicle who was modified", response = Response.class),
             @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
-            @ApiResponse(code = 404, message = "Log not found", response = Response.class),
+            @ApiResponse(code = 404, message = "Vehicle not found", response = Response.class),
             @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
     })
     @PutMapping("/{id}")
