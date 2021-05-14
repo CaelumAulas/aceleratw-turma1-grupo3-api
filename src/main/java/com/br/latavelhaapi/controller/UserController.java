@@ -59,7 +59,7 @@ public class UserController {
 
     @ApiOperation(value = "Delete a user")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Returns the a user deleted", response = Response.class),
+            @ApiResponse(code = 200, message = "Returns the deleted user", response = Response.class),
             @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
             @ApiResponse(code = 404, message = "User not found", response = Response.class),
             @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),

@@ -62,7 +62,7 @@ public class BrandController {
 
     @ApiOperation(value = "Delete a brand")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Returns the a brand deleted", response = Response.class),
+            @ApiResponse(code = 200, message = "Returns the deleted brand", response = Response.class),
             @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
             @ApiResponse(code = 404, message = "Brand not found", response = Response.class),
             @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
@@ -74,7 +74,7 @@ public class BrandController {
 
     @ApiOperation(value = "Edit brand")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Return the brand who was modified", response = Response.class),
+            @ApiResponse(code = 200, message = "Returns the modified brand", response = Response.class),
             @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
             @ApiResponse(code = 404, message = "Brand not found", response = Response.class),
             @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
