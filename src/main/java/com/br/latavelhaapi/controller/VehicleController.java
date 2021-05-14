@@ -5,6 +5,9 @@ import com.br.latavelhaapi.model.User;
 import com.br.latavelhaapi.model.Vehicle;
 import com.br.latavelhaapi.payload.Response;
 import com.br.latavelhaapi.service.VehicleService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,13 @@ public class VehicleController {
     @Autowired
     private VehicleService vehicleService;
 
+    @ApiOperation(value = "Add a new Vehicle")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Returns the registered vehicle", response = Response.class),
+            @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
+            @ApiResponse(code = 400, message = "Bad request", response = Response.class),
+            @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
+    })
     @PostMapping
     public ResponseEntity<?> add(@RequestBody @Valid VehicleForm vehicleForm){
         Vehicle vehicle = vehicleForm.convert(vehicleService);
@@ -31,6 +41,13 @@ public class VehicleController {
     }
 
 
+    @ApiOperation(value = "Finds a list vehicles")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Returns the list vehicles", response = Response.class),
+            @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
+            @ApiResponse(code = 404, message = "Vehicle not found", response = Response.class),
+            @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
+    })
     @GetMapping
     public ResponseEntity<?> list() {
         List<Vehicle> vehicles = vehicleService.list();
@@ -43,6 +60,13 @@ public class VehicleController {
         return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Delete a vhicle")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Returns the a vehicle deleted", response = Response.class),
+            @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
+            @ApiResponse(code = 404, message = "Vehicle not found", response = Response.class),
+            @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable long id){
         Optional<Vehicle> findVehicle = vehicleService.findById(id);
@@ -55,6 +79,13 @@ public class VehicleController {
                 HttpStatus.NOT_FOUND);
     }
 
+    @ApiOperation(value = "Edit vehicle")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Return the vehicle who was modified", response = Response.class),
+            @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
+            @ApiResponse(code = 404, message = "Vehicle not found", response = Response.class),
+            @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
+    })
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody Vehicle vehicle, @PathVariable("id") Long id) {
         Optional<Vehicle> findVehicle = vehicleService.findById(id);
