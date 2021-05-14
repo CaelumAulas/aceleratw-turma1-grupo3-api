@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface BrandRepository extends JpaRepository<Brand, Long> {
 
     Brand findByID(long id);
+
+    boolean existsByName(String name);
 }
