@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VehicleService {
@@ -47,5 +48,9 @@ public class VehicleService {
 
     public Vehicle findByYear(String year) {
         return vehicleRepository.findByYear(year);
+    }
+
+    public Optional<Vehicle> findById(long id) {
+        return vehicleRepository.findById(id);
     }
 }
