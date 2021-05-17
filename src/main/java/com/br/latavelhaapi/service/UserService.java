@@ -30,11 +30,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
+    }
+
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 }

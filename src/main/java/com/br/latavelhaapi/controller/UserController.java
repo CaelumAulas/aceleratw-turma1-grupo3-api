@@ -24,20 +24,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(value = "Add a new User")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Returns the registered user", response = Response.class),
-            @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
-            @ApiResponse(code = 400, message = "Bad request", response = Response.class),
-            @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
-    })
-    @PostMapping
-    public User add(@RequestBody @Valid UserForm userForm){
-        User user = userForm.convert(userService);
-        userService.add(user);
-        return user;
-    }
-
     @ApiOperation(value = "Finds a list users")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Returns the list users", response = Response.class),

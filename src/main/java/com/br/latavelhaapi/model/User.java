@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @Table(name="users")
@@ -29,6 +30,9 @@ public class User implements Serializable {
     @Column
     @NotNull
     private String password;
+
+    @Column
+    private String token;
 
     public User() {
     }
@@ -74,5 +78,19 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void setToken() {
+        UUID uuid = UUID.randomUUID();
+        String token = uuid.toString();
+        this.token = token;
     }
 }
