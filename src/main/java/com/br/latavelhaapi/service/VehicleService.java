@@ -1,5 +1,6 @@
 package com.br.latavelhaapi.service;
 
+import com.br.latavelhaapi.model.Brand;
 import com.br.latavelhaapi.model.Vehicle;
 import com.br.latavelhaapi.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,4 +54,8 @@ public class VehicleService {
     public Optional<Vehicle> findById(long id) {
         return vehicleRepository.findById(id);
     }
+
+	public List<Vehicle> findByBrandID(long id) {
+		return vehicleRepository.findByBrandID(id);
+	}
 }

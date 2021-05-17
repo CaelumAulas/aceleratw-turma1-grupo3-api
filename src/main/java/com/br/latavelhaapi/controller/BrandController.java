@@ -1,8 +1,11 @@
 package com.br.latavelhaapi.controller;
 
 import com.br.latavelhaapi.model.Brand;
+import com.br.latavelhaapi.model.Vehicle;
 import com.br.latavelhaapi.payload.Response;
 import com.br.latavelhaapi.service.BrandService;
+import com.br.latavelhaapi.service.VehicleService;
+
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -21,6 +24,9 @@ public class BrandController {
 
     @Autowired
     private BrandService brandService;
+    
+    @Autowired
+    private VehicleService vehicleService;
 
     @ApiOperation(value = "Add a new Brand")
     @ApiResponses(value = {
@@ -80,8 +86,31 @@ public class BrandController {
             @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
     })
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable long id){
-        brandService.delete(id);
+    public ResponseEntity<?> delete(@PathVariable long id) {
+    	try {
+            Optional<Brand> findBrand = brandService.findById(id);
+
+            if(!findBrand.isPresent()){
+            	 return new ResponseEntity<>(
+                         new Response(false, "Not found brand with id: " + id),
+                         HttpStatus.NOT_FOUND);
+            }
+            
+            List<Vehicle> findVehicle = vehicleService.findByBrandID(findBrand.get().getID());
+
+            if(findVehicle.size() > 0) {
+            	 return new ResponseEntity<>(
+                         new Response(false, "Impossible to delete brand. A vehicle use that brand!"),
+                         HttpStatus.BAD_REQUEST);
+            }
+            
+            brandService.delete(id);
+            
+            return new ResponseEntity<Brand>(findBrand.get(), HttpStatus.OK); 
+    	} catch(Exception e) {
+            return new ResponseEntity<>(new Response(false, "Bad request!"),
+                    HttpStatus.BAD_REQUEST);
+    	}
     }
 
     @ApiOperation(value = "Edit brand")
