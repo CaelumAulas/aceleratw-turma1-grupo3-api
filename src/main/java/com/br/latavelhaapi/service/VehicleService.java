@@ -58,4 +58,8 @@ public class VehicleService {
 	public List<Vehicle> findByBrandID(long id) {
 		return vehicleRepository.findByBrandID(id);
 	}
+
+	public List<Vehicle> listByBrandName(String brand) {
+		return vehicleRepository.findByBrandName(brand);
+	}
 }
