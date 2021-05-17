@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -53,9 +55,19 @@ public class VehicleController {
             @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
     })
     @GetMapping
-    public ResponseEntity<?> list() {
+    public ResponseEntity<?> list(String model, String brand) {
         try {
-            List<Vehicle> vehicles = vehicleService.list();
+        	List<Vehicle> vehicles = null;
+
+        	// TODO: refactor ifs statements
+        	if(model != null) {
+        		vehicles = vehicleService.listByModel(model);
+        	} else if (brand != null) {
+        		vehicles = vehicleService.listByBrandName(brand);
+        	} else {
+        		vehicles = vehicleService.list();
+        	}
+        	
             if(vehicles == null){
                 return new ResponseEntity<>(
                         new Response(false, "Not found vehicles"),
