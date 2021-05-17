@@ -59,6 +59,7 @@ public class VehicleController {
         try {
         	List<Vehicle> vehicles = null;
 
+        	// TODO: refactor ifs statements
         	if(model != null) {
         		vehicles = vehicleService.listByModel(model);
         	} else if (brand != null) {
