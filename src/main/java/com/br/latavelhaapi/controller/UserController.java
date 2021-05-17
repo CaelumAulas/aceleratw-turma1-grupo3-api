@@ -47,14 +47,20 @@ public class UserController {
     })
     @GetMapping
     public ResponseEntity<?> list() {
-        List<User> users = userService.list();
-        if(users == null){
-            return new ResponseEntity<>(
-                    new Response(false, "Not found users"),
-                    HttpStatus.NOT_FOUND);
-        }
+        try {
+            List<User> users = userService.list();
+            if(users == null){
+                return new ResponseEntity<>(
+                        new Response(false, "Not found users"),
+                        HttpStatus.NOT_FOUND);
+            }
 
-        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+            return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(
+                    new Response(false, "Bad request"),
+                    HttpStatus.BAD_REQUEST);
+        }
     }
 
     @ApiOperation(value = "Delete a user")
@@ -66,14 +72,20 @@ public class UserController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable long id){
-        Optional<User> findUser = userService.findById(id);
-        if(findUser.isPresent()){
-            userService.delete(id);
-            return new ResponseEntity<User>(findUser.get(), HttpStatus.OK);
+        try {
+            Optional<User> findUser = userService.findById(id);
+            if(findUser.isPresent()){
+                userService.delete(id);
+                return new ResponseEntity<User>(findUser.get(), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(
+                    new Response(false, "Not found user with id:" + id),
+                    HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(
+                    new Response(false, "Bad request"),
+                    HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(
-                new Response(false, "Not found user with id:" + id),
-                HttpStatus.NOT_FOUND);
     }
 
     @ApiOperation(value = "Edit user")
@@ -85,14 +97,20 @@ public class UserController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody User user, @PathVariable("id") Long id) {
-        Optional<User> findUser = userService.findById(id);
-        if(findUser.isPresent()){
-            user.setID(findUser.get().getID());
-            userService.update(user);
-            return new ResponseEntity<User>(findUser.get(), HttpStatus.OK);
+        try {
+            Optional<User> findUser = userService.findById(id);
+            if(findUser.isPresent()){
+                user.setID(findUser.get().getID());
+                userService.update(user);
+                return new ResponseEntity<User>(findUser.get(), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(
+                    new Response(false, "Not found user with id: " + id),
+                    HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(
+                    new Response(false, "Bad request"),
+                    HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(
-                new Response(false, "Not found user with id: " + id),
-                HttpStatus.NOT_FOUND);
     }
 }
