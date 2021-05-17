@@ -1,7 +1,6 @@
 package com.br.latavelhaapi.controller;
 
 import com.br.latavelhaapi.model.DTO.VehicleForm;
-import com.br.latavelhaapi.model.User;
 import com.br.latavelhaapi.model.Vehicle;
 import com.br.latavelhaapi.payload.Response;
 import com.br.latavelhaapi.service.VehicleService;
@@ -34,10 +33,15 @@ public class VehicleController {
     })
     @PostMapping
     public ResponseEntity<?> add(@RequestBody @Valid VehicleForm vehicleForm){
-        Vehicle vehicle = vehicleForm.convert(vehicleService);
-        vehicleService.add(vehicle);
-        return new ResponseEntity(new Response(true, "Vehcile registred successfully"),
-                HttpStatus.CREATED);
+        try {
+            Vehicle vehicle = vehicleForm.convert(vehicleService);
+            vehicleService.add(vehicle);
+            return new ResponseEntity(new Response(true, "Vehcile registred successfully"),
+                    HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity(new Response(false, "Bad request"),
+                    HttpStatus.BAD_REQUEST);
+        }
     }
 
 
@@ -50,14 +54,19 @@ public class VehicleController {
     })
     @GetMapping
     public ResponseEntity<?> list() {
-        List<Vehicle> vehicles = vehicleService.list();
-        if(vehicles == null){
-            return new ResponseEntity<>(
-                    new Response(false, "Not found vehicles"),
-                    HttpStatus.NOT_FOUND);
-        }
+        try {
+            List<Vehicle> vehicles = vehicleService.list();
+            if(vehicles == null){
+                return new ResponseEntity<>(
+                        new Response(false, "Not found vehicles"),
+                        HttpStatus.NOT_FOUND);
+            }
 
-        return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.OK);
+            return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(new Response(false, "Bad request"),
+                    HttpStatus.BAD_REQUEST);
+        }
     }
 
     @ApiOperation(value = "Delete a vhicle")
@@ -69,14 +78,20 @@ public class VehicleController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable long id){
-        Optional<Vehicle> findVehicle = vehicleService.findById(id);
-        if(findVehicle.isPresent()){
-            vehicleService.delete(id);
-            return new ResponseEntity<Vehicle>(findVehicle.get(), HttpStatus.OK);
+        try {
+            Optional<Vehicle> findVehicle = vehicleService.findById(id);
+            if(findVehicle.isPresent()){
+                vehicleService.delete(id);
+                return new ResponseEntity<Vehicle>(findVehicle.get(), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(
+                    new Response(false, "Not found vehicle with id:" + id),
+                    HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity(new Response(false, "Bad request"),
+                    HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(
-                new Response(false, "Not found vehicle with id:" + id),
-                HttpStatus.NOT_FOUND);
+
     }
 
     @ApiOperation(value = "Edit vehicle")
@@ -88,14 +103,19 @@ public class VehicleController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody Vehicle vehicle, @PathVariable("id") Long id) {
-        Optional<Vehicle> findVehicle = vehicleService.findById(id);
-        if(findVehicle.isPresent()){
-            vehicle.setID(findVehicle.get().getID());
-            vehicleService.update(vehicle);
-            return new ResponseEntity<Vehicle>(findVehicle.get(), HttpStatus.OK);
+        try {
+            Optional<Vehicle> findVehicle = vehicleService.findById(id);
+            if(findVehicle.isPresent()){
+                vehicle.setID(findVehicle.get().getID());
+                vehicleService.update(vehicle);
+                return new ResponseEntity<Vehicle>(findVehicle.get(), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(
+                    new Response(false, "Not found user with id: " + id),
+                    HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity(new Response(false, "Bad request"),
+                    HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(
-                new Response(false, "Not found user with id: " + id),
-                HttpStatus.NOT_FOUND);
     }
 }
