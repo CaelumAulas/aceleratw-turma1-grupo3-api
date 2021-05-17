@@ -31,13 +31,20 @@ public class BrandController {
     })
     @PostMapping
     public ResponseEntity<?> add(@RequestBody Brand brand){
-        if(brandService.existsByName(brand.getName())) {
-            return new ResponseEntity<>(new Response(false, "Brand already in use!"),
+        try {
+            if(brandService.existsByName(brand.getName())) {
+                return new ResponseEntity<>(new Response(false, "Brand already in use!"),
+                        HttpStatus.CONFLICT);
+            }
+            brandService.add(brand);
+            return new ResponseEntity(new Response(true, "Brand registred successfully"),
+                    HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Response(false, "Bad request!"),
                     HttpStatus.BAD_REQUEST);
         }
-        brandService.add(brand);
-        return new ResponseEntity(new Response(true, "Brand registred successfully"),
-                HttpStatus.CREATED);
+
+
     }
 
     @ApiOperation(value = "Finds a list brands")
@@ -49,14 +56,19 @@ public class BrandController {
     })
     @GetMapping
     public ResponseEntity<?> list() {
-        List<Brand> brands = brandService.list();
-        if(brands == null){
-            return new ResponseEntity<>(
-                    new Response(false, "Not found brands"),
-                    HttpStatus.NOT_FOUND);
-        }
+        try {
+            List<Brand> brands = brandService.list();
+            if(brands == null){
+                return new ResponseEntity<>(
+                        new Response(false, "Not found brands"),
+                        HttpStatus.NOT_FOUND);
+            }
 
-        return new ResponseEntity<List<Brand>>(brands, HttpStatus.OK);
+            return new ResponseEntity<List<Brand>>(brands, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Response(false, "Bad request!"),
+                    HttpStatus.BAD_REQUEST);
+        }
     }
 
 
@@ -81,14 +93,19 @@ public class BrandController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody Brand brand, @PathVariable("id") Long id) {
-        Optional<Brand> findBrand = brandService.findById(id);
-        if(findBrand.isPresent()){
-            brand.setID(findBrand.get().getID());
-            brandService.update(brand);
-            return new ResponseEntity<Brand>(findBrand.get(), HttpStatus.OK);
+        try {
+            Optional<Brand> findBrand = brandService.findById(id);
+            if(findBrand.isPresent()){
+                brand.setID(findBrand.get().getID());
+                brandService.update(brand);
+                return new ResponseEntity<Brand>(findBrand.get(), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(
+                    new Response(false, "Not found brand with id: " + id),
+                    HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Response(false, "Bad request!"),
+                    HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(
-                new Response(false, "Not found brand with id: " + id),
-                HttpStatus.NOT_FOUND);
     }
 }
