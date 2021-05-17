@@ -7,6 +7,7 @@ import com.br.latavelhaapi.service.UserService;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Optional;
 
 public class UserForm {
 
@@ -49,7 +50,7 @@ public class UserForm {
     }
 
     public User convert(UserService userService){
-        User user = userService.findByEmail(email);
+        Optional<User> user = userService.findByEmail(email);
         return new User(name,email,password);
     }
 }

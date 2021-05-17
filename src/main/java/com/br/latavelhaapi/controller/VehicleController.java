@@ -36,7 +36,7 @@ public class VehicleController {
         try {
             Vehicle vehicle = vehicleForm.convert(vehicleService);
             vehicleService.add(vehicle);
-            return new ResponseEntity(new Response(true, "Vehcile registred successfully"),
+            return new ResponseEntity(new Response(true, "Vehicle registred successfully"),
                     HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity(new Response(false, "Bad request"),
