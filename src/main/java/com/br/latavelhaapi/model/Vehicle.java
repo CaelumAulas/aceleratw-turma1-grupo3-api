@@ -1,13 +1,11 @@
 package com.br.latavelhaapi.model;
 
 import com.sun.istack.NotNull;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 @Entity
 @Table(name = "vehicles")
@@ -31,7 +29,6 @@ public class Vehicle implements Serializable {
     @NotNull
     private BigDecimal price;
 
-    @DateTimeFormat
     @NotNull
     private String year;
 

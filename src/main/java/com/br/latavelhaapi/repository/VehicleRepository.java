@@ -24,6 +24,6 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 
 	List<Vehicle> findByBrandName(String brand);
 
-    @Query(value = "SELECT v FROM vehicles v WHERE v.price BETWEEN rangeStart AND rangeEnd;", nativeQuery = true)
-    List<Vehicle> findByRangeStartBetweenRangeEnd(@Param("rangeStart") double rangeStart,@Param("rangeEnd") double rangeEnd);
+    @Query(value = "SELECT * FROM vehicles WHERE price BETWEEN :range_start AND :range_end", nativeQuery = true)
+    List<Vehicle> findByRangeStartBetweenRangeEnd(@Param("range_start") double rangeStart,@Param("range_end") double rangeEnd);
 }
