@@ -27,52 +27,75 @@ public class VehicleController {
             @ApiResponse(code = 201, message = "Returns the registered vehicle", response = Response.class),
             @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
             @ApiResponse(code = 400, message = "Bad request", response = Response.class),
-            @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
-    })
+            @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class), })
     @PostMapping
-    public ResponseEntity<?> add(@RequestBody Vehicle vehicle){
+    public ResponseEntity<?> add(@RequestBody Vehicle vehicle) {
         try {
             vehicleService.add(vehicle);
-            return new ResponseEntity(new Response(true, "Vehicle registred successfully"),
-                    HttpStatus.CREATED);
+            return new ResponseEntity(
+                new Response(true, "Vehicle registred successfully"),
+                HttpStatus.CREATED
+            );
         } catch (Exception e) {
-            return new ResponseEntity(new Response(false, "Bad request"),
-                    HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(
+                new Response(false, "Bad request"),
+                HttpStatus.BAD_REQUEST
+            );
         }
     }
 
+    private ResponseEntity<?> listByModel(String model) {
+        try {
+            return new ResponseEntity<List<Vehicle>>(
+                vehicleService.listByModel(model), 
+                HttpStatus.OK
+            );
+        } catch (Exception e) {
+            return new ResponseEntity(
+                new Response(false, "Bad request"),
+                HttpStatus.BAD_REQUEST
+            );
+        }
+    }
 
-    @ApiOperation(value = "Finds a list vehicles")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Returns the list vehicles", response = Response.class),
+    private ResponseEntity<?> listByBrand(String brand) {
+        try {
+            return new ResponseEntity<List<Vehicle>>(
+                vehicleService.listByBrandName(brand), 
+                HttpStatus.OK
+            );
+        } catch (Exception e) {
+            return new ResponseEntity(
+                new Response(false, "Bad request"),
+                HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    @ApiOperation(value = "Finds a list of vehicles")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Returns the list of vehicles", response = Response.class),
             @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
             @ApiResponse(code = 404, message = "Vehicle not found", response = Response.class),
-            @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
-    })
+            @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class), })
     @GetMapping
-    public ResponseEntity<?> list(String model, String brand) {
+    public ResponseEntity<?> list(String brand, String model) {
         try {
-        	List<Vehicle> vehicles = null;
-
-        	// TODO: refactor ifs statements
-        	if(model != null) {
-        		vehicles = vehicleService.listByModel(model);
-        	} else if (brand != null) {
-        		vehicles = vehicleService.listByBrandName(brand);
-        	} else {
-        		vehicles = vehicleService.list();
-        	}
-        	
-            if(vehicles == null){
-                return new ResponseEntity<>(
-                        new Response(false, "Not found vehicles"),
-                        HttpStatus.NOT_FOUND);
+            if (model != null && !model.isEmpty()) {
+                return this.listByModel(model);
             }
-
-            return new ResponseEntity<List<Vehicle>>(vehicles, HttpStatus.OK);
+            
+            if (brand != null && !brand.isEmpty()) {
+                return this.listByBrand(brand);
+            }
+            return new ResponseEntity<List<Vehicle>>(
+                vehicleService.list(), 
+                HttpStatus.OK
+            );
         } catch (Exception e) {
-            return new ResponseEntity(new Response(false, "Bad request"),
-                    HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(
+                new Response(false, "Bad request"), 
+                HttpStatus.BAD_REQUEST
+            );
         }
     }
 
@@ -81,22 +104,27 @@ public class VehicleController {
             @ApiResponse(code = 200, message = "Returns the a vehicle deleted", response = Response.class),
             @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
             @ApiResponse(code = 404, message = "Vehicle not found", response = Response.class),
-            @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
-    })
+            @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class), })
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id){
+    public ResponseEntity<?> delete(@PathVariable long id) {
         try {
             Optional<Vehicle> findVehicle = vehicleService.findById(id);
-            if(findVehicle.isPresent()){
+            if (findVehicle.isPresent()) {
                 vehicleService.delete(id);
-                return new ResponseEntity<Vehicle>(findVehicle.get(), HttpStatus.OK);
+                return new ResponseEntity<Vehicle>(
+                    findVehicle.get(), 
+                    HttpStatus.OK
+                );
             }
             return new ResponseEntity<>(
-                    new Response(false, "Not found vehicle with id:" + id),
-                    HttpStatus.NOT_FOUND);
+                new Response(false, "Not found vehicle with id:" + id), 
+                HttpStatus.NOT_FOUND
+            );
         } catch (Exception e) {
-            return new ResponseEntity(new Response(false, "Bad request"),
-                    HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(
+                new Response(false, "Bad request"), 
+                HttpStatus.BAD_REQUEST
+            );
         }
 
     }
@@ -106,23 +134,28 @@ public class VehicleController {
             @ApiResponse(code = 200, message = "Return the vehicle who was modified", response = Response.class),
             @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
             @ApiResponse(code = 404, message = "Vehicle not found", response = Response.class),
-            @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class),
-    })
+            @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class), })
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody Vehicle vehicle, @PathVariable("id") Long id) {
         try {
             Optional<Vehicle> findVehicle = vehicleService.findById(id);
-            if(findVehicle.isPresent()){
+            if (findVehicle.isPresent()) {
                 vehicle.setID(findVehicle.get().getID());
                 vehicleService.update(vehicle);
-                return new ResponseEntity<Vehicle>(findVehicle.get(), HttpStatus.OK);
+                return new ResponseEntity<Vehicle>(
+                    findVehicle.get(), 
+                    HttpStatus.OK
+                );
             }
             return new ResponseEntity<>(
-                    new Response(false, "Not found user with id: " + id),
-                    HttpStatus.NOT_FOUND);
+                new Response(false, "Not found user with id: " + id), 
+                HttpStatus.NOT_FOUND
+            );
         } catch (Exception e) {
-            return new ResponseEntity(new Response(false, "Bad request"),
-                    HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(
+                new Response(false, "Bad request"), 
+                HttpStatus.BAD_REQUEST
+            );
         }
     }
 }
