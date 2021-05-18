@@ -27,7 +27,7 @@ public class Vehicle implements Serializable {
 
     @Column
     @NotNull
-    private BigDecimal price;
+    private double price;
 
     @NotNull
     private String year;
@@ -36,7 +36,7 @@ public class Vehicle implements Serializable {
 
     }
 
-    public Vehicle(String model, Brand brand, BigDecimal price, String year) {
+    public Vehicle(String model, Brand brand, double price, String year) {
         this.model = model;
         this.brand = brand;
         this.price = price;
@@ -67,11 +67,11 @@ public class Vehicle implements Serializable {
         this.brand = brand;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

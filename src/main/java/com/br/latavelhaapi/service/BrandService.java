@@ -40,4 +40,7 @@ public class BrandService {
         return brandRepository.findById(id);
     }
 
+    public List<Brand> findAll() {
+        return brandRepository.findAll();
+    }
 }
