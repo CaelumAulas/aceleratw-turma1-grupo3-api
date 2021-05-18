@@ -2,6 +2,7 @@ package com.br.latavelhaapi.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "price_range")
+@Table(name = "price_ranges")
 public class PriceRange implements Serializable {
   
   private static final Long serialVersionUID = 1L;
@@ -20,8 +21,10 @@ public class PriceRange implements Serializable {
 
   private String label;
   
+  @Column(name = "range_start")
   private double rangeStart;
-
+  
+  @Column(name = "range_end")
   private double rangeEnd;
 
   public Long getID() {
