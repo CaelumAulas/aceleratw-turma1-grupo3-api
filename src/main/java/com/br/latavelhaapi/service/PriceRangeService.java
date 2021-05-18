@@ -1,6 +1,7 @@
 package com.br.latavelhaapi.service;
 
 import com.br.latavelhaapi.model.PriceRange;
+import com.br.latavelhaapi.model.Vehicle;
 import com.br.latavelhaapi.repository.PriceRangeRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,8 @@ public class PriceRangeService {
         return priceRangeRepository.save(range);
     }
 
-    public Optional<PriceRange> findById(Long id) {
-        return priceRangeRepository.findById(id);
+    public PriceRange findById(Long id) {
+        return priceRangeRepository.findByID(id);
     }
 
 }

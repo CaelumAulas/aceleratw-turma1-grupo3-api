@@ -62,4 +62,8 @@ public class VehicleService {
 	public List<Vehicle> listByBrandName(String brand) {
 		return vehicleRepository.findByBrandName(brand);
 	}
+
+    public List<Vehicle> listByPriceRange(double rangeStart, double rangeEnd) {
+        return vehicleRepository.findByRangeStartBetweenRangeEnd(rangeStart, rangeEnd);
+    }
 }
