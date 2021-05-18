@@ -1,7 +1,9 @@
 package com.br.latavelhaapi.controller;
 
+import com.br.latavelhaapi.model.PriceRange;
 import com.br.latavelhaapi.model.Vehicle;
 import com.br.latavelhaapi.payload.Response;
+import com.br.latavelhaapi.service.PriceRangeService;
 import com.br.latavelhaapi.service.VehicleService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -21,6 +23,9 @@ public class VehicleController {
 
     @Autowired
     private VehicleService vehicleService;
+
+    @Autowired
+    private PriceRangeService priceRangeService;
 
     @ApiOperation(value = "Add a new Vehicle")
     @ApiResponses(value = {
@@ -72,13 +77,29 @@ public class VehicleController {
         }
     }
 
+    private ResponseEntity<?> listByPriceRangeID(Long priceRangeId) {
+        try {
+            PriceRange priceRange = priceRangeService.findById(priceRangeId);
+            System.out.println(priceRange.toString());
+            return new ResponseEntity<List<Vehicle>>(
+                vehicleService.listByPriceRange(priceRange.getRangeStart(), priceRange.getRangeEnd()), 
+                HttpStatus.OK
+            );
+        } catch (Exception e) {
+            return new ResponseEntity(
+                new Response(false, "Bad request"),
+                HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
     @ApiOperation(value = "Finds a list of vehicles")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Returns the list of vehicles", response = Response.class),
             @ApiResponse(code = 401, message = "You do not have permission to access this feature.", response = Response.class),
             @ApiResponse(code = 404, message = "Vehicle not found", response = Response.class),
             @ApiResponse(code = 500, message = "An exception was thrown", response = Response.class), })
     @GetMapping
-    public ResponseEntity<?> list(String brand, String model) {
+    public ResponseEntity<?> list(String brand, String model, Long priceRangeId) {
         try {
             if (model != null && !model.isEmpty()) {
                 return this.listByModel(model);
@@ -87,6 +108,11 @@ public class VehicleController {
             if (brand != null && !brand.isEmpty()) {
                 return this.listByBrand(brand);
             }
+
+            if (priceRangeId != null) {
+                return this.listByPriceRangeID(priceRangeId);
+            }
+
             return new ResponseEntity<List<Vehicle>>(
                 vehicleService.list(), 
                 HttpStatus.OK
@@ -98,6 +124,7 @@ public class VehicleController {
             );
         }
     }
+
 
     @ApiOperation(value = "Delete a vhicle")
     @ApiResponses(value = {
