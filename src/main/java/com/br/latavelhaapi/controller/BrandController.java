@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/brands")
@@ -88,15 +87,15 @@ public class BrandController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable long id) {
     	try {
-            Optional<Brand> findBrand = brandService.findById(id);
+            Brand findBrand = brandService.findById(id);
 
-            if(!findBrand.isPresent()){
+            if(findBrand == null){
             	 return new ResponseEntity<>(
                          new Response(false, "Not found brand with id: " + id),
                          HttpStatus.NOT_FOUND);
             }
             
-            List<Vehicle> findVehicle = vehicleService.findByBrandID(findBrand.get().getID());
+            List<Vehicle> findVehicle = vehicleService.findByBrandID(findBrand.getID());
 
             if(findVehicle.size() > 0) {
             	 return new ResponseEntity<>(
@@ -106,7 +105,7 @@ public class BrandController {
             
             brandService.delete(id);
             
-            return new ResponseEntity<Brand>(findBrand.get(), HttpStatus.OK); 
+            return new ResponseEntity<Brand>(findBrand, HttpStatus.OK);
     	} catch(Exception e) {
             return new ResponseEntity<>(new Response(false, "Bad request!"),
                     HttpStatus.BAD_REQUEST);
@@ -123,11 +122,11 @@ public class BrandController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody Brand brand, @PathVariable("id") Long id) {
         try {
-            Optional<Brand> findBrand = brandService.findById(id);
-            if(findBrand.isPresent()){
-                brand.setID(findBrand.get().getID());
+            Brand findBrand = brandService.findById(id);
+            if(findBrand != null){
+                brand.setID(findBrand.getID());
                 brandService.update(brand);
-                return new ResponseEntity<Brand>(findBrand.get(), HttpStatus.OK);
+                return new ResponseEntity<Brand>(findBrand, HttpStatus.OK);
             }
             return new ResponseEntity<>(
                     new Response(false, "Not found brand with id: " + id),

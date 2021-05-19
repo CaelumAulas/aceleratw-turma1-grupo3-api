@@ -137,11 +137,11 @@ public class VehicleController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable long id) {
         try {
-            Optional<Vehicle> findVehicle = vehicleService.findById(id);
-            if (findVehicle.isPresent()) {
+            Vehicle findVehicle = vehicleService.findById(id);
+            if (findVehicle != null) {
                 vehicleService.delete(id);
                 return new ResponseEntity<Vehicle>(
-                    findVehicle.get(), 
+                    findVehicle,
                     HttpStatus.OK
                 );
             }
@@ -167,12 +167,12 @@ public class VehicleController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody Vehicle vehicle, @PathVariable("id") Long id) {
         try {
-            Optional<Vehicle> findVehicle = vehicleService.findById(id);
-            if (findVehicle.isPresent()) {
-                vehicle.setID(findVehicle.get().getID());
+            Vehicle findVehicle = vehicleService.findById(id);
+            if (findVehicle != null) {
+                vehicle.setID(findVehicle.getID());
                 vehicleService.update(vehicle);
                 return new ResponseEntity<Vehicle>(
-                    findVehicle.get(), 
+                    findVehicle,
                     HttpStatus.OK
                 );
             }
