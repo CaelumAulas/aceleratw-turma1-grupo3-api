@@ -14,7 +14,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Object add(User user){
+    public User add(User user){
         return userRepository.save(user);
     }
 
@@ -34,8 +34,8 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public User findById(Long id) {
+        return userRepository.findByID(id);
     }
 
     public boolean existsByEmail(String email) {

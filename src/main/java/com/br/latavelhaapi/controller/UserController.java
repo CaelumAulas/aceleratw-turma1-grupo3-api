@@ -59,10 +59,10 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable long id){
         try {
-            Optional<User> findUser = userService.findById(id);
-            if(findUser.isPresent()){
+            User findUser = userService.findById(id);
+            if(findUser != null){
                 userService.delete(id);
-                return new ResponseEntity<User>(findUser.get(), HttpStatus.OK);
+                return new ResponseEntity<User>(findUser, HttpStatus.OK);
             }
             return new ResponseEntity<>(
                     new Response(false, "Not found user with id:" + id),
@@ -84,11 +84,11 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody User user, @PathVariable("id") Long id) {
         try {
-            Optional<User> findUser = userService.findById(id);
-            if(findUser.isPresent()){
-                user.setID(findUser.get().getID());
+            User findUser = userService.findById(id);
+            if(findUser != null){
+                user.setID(findUser.getID());
                 userService.update(user);
-                return new ResponseEntity<User>(findUser.get(), HttpStatus.OK);
+                return new ResponseEntity<User>(findUser, HttpStatus.OK);
             }
             return new ResponseEntity<>(
                     new Response(false, "Not found user with id: " + id),
