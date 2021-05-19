@@ -51,8 +51,8 @@ public class VehicleService {
         return vehicleRepository.findByYear(year);
     }
 
-    public Optional<Vehicle> findById(long id) {
-        return vehicleRepository.findById(id);
+    public Vehicle findById(long id) {
+        return vehicleRepository.findByID(id);
     }
 
 	public List<Vehicle> findByBrandID(long id) {
