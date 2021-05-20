@@ -97,7 +97,7 @@ public class BrandServiceTest {
         List<Brand> findAllBefore = brandServiceTest.findAll();
         assertThat(findAllBefore.size()).isEqualTo(3);
 
-        Brand brandDelete = brandServiceTest.delete(1);
+        Brand brandDelete = brandServiceTest.delete(brandSaveOne.getID());
 
         List<Brand> findAllAfter = brandServiceTest.findAll();
         assertThat(findAllAfter.size()).isEqualTo(2);
