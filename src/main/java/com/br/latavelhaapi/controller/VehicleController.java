@@ -51,6 +51,7 @@ public class VehicleController {
 
     private ResponseEntity<?> listByModel(String model) {
         try {
+            System.out.println("entrei no list model");
             return new ResponseEntity<List<Vehicle>>(
                 vehicleService.listByModel(model), 
                 HttpStatus.OK
@@ -80,8 +81,6 @@ public class VehicleController {
     private ResponseEntity<?> listByPriceRangeID(Long priceRangeId) {
         try {
             PriceRange priceRange = priceRangeService.findById(priceRangeId);
-            System.out.println(priceRange.getRangeEnd());
-            System.out.println(priceRange.getRangeStart());
 
             return new ResponseEntity<List<Vehicle>>(
                 vehicleService.listByPriceRange(priceRange.getRangeStart(), priceRange.getRangeEnd()), 
