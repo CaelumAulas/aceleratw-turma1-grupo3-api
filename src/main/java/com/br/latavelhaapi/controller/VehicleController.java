@@ -51,7 +51,6 @@ public class VehicleController {
 
     private ResponseEntity<?> listByModel(String model) {
         try {
-            System.out.println("entrei no list model");
             return new ResponseEntity<List<Vehicle>>(
                 vehicleService.listByModel(model), 
                 HttpStatus.OK
