@@ -139,29 +139,6 @@ public class VehicleServiceTest {
     }
 
 
-//    @Test
-//    public void listVehiclesByModel(){
-//        Brand brandSaveOne = brandServiceTest.add(createBrand("Fiat"));
-//        Brand brandSaveTwo = brandServiceTest.add(createBrand("BMW"));
-//
-//        vehicleServiceTest.add(
-//                createVehicle("Uno", brandSaveOne, 1000, "2021")
-//        );
-//        vehicleServiceTest.add(
-//                createVehicle("Argo", brandSaveOne, 2000, "2019")
-//        );
-//        vehicleServiceTest.add(
-//                createVehicle("Z4", brandSaveTwo, 3000, "2018")
-//        );
-//
-//        List<Vehicle> findAllOne = vehicleServiceTest.listByModel("Fiat");
-//        List<Vehicle> findAllTwo = vehicleServiceTest.listByModel("BMW");
-//
-//        assertThat(findAllOne.size()).isEqualTo(2);
-//        assertThat(findAllTwo.size()).isEqualTo(1);
-//    }
-
-
     @Test
     public void getVehicleByID() {
         Brand brandSave = brandServiceTest.add(createBrand("Fiat"));
