@@ -80,8 +80,6 @@ public class VehicleController {
     private ResponseEntity<?> listByPriceRangeID(Long priceRangeId) {
         try {
             PriceRange priceRange = priceRangeService.findById(priceRangeId);
-            System.out.println(priceRange.getRangeEnd());
-            System.out.println(priceRange.getRangeStart());
 
             return new ResponseEntity<List<Vehicle>>(
                 vehicleService.listByPriceRange(priceRange.getRangeStart(), priceRange.getRangeEnd()), 

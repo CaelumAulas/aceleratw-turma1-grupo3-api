@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
@@ -14,13 +13,9 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 
     Vehicle findByID(long id);
 
-    List<Vehicle> findByPrice(BigDecimal price);
-
     List<Vehicle> findByModel(String model);
 
     List<Vehicle> findByBrandID(long id);
-
-    Vehicle findByYear(String year);
 
 	List<Vehicle> findByBrandName(String brand);
 
