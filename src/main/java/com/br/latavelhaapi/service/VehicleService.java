@@ -16,7 +16,7 @@ public class VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    public Object add(Vehicle vehicle){
+    public Vehicle add(Vehicle vehicle){
         return vehicleRepository.save(vehicle);
     }
 
@@ -35,20 +35,9 @@ public class VehicleService {
         return vehicleRepository.save(vehicle);
     }
 
-    public List<Vehicle> listByPrice(BigDecimal price){
-        return vehicleRepository.findByPrice(price);
-    }
-
     public List<Vehicle> listByModel(String model){
+        System.out.println("entrei no service");
         return vehicleRepository.findByModel(model);
-    }
-
-    public List<Vehicle> listByBrand(long id){
-        return vehicleRepository.findByBrandID(id);
-    }
-
-    public Vehicle findByYear(String year) {
-        return vehicleRepository.findByYear(year);
     }
 
     public Vehicle findById(long id) {
