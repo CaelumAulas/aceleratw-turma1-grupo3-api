@@ -93,6 +93,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/priceRanges")
                 .permitAll()
+                .antMatchers(HttpMethod.GET, "/brands")
+                .permitAll()
                 .antMatchers(AUTH_WHITELIST)
                 .permitAll()
                 .anyRequest()
