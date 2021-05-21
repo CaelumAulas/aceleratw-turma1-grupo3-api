@@ -112,7 +112,6 @@ public class UserControllerTest {
         generaterUser();
         String token = obtainAccessToken("taina@email.com","TM@123");
         Optional<User> user = userService.findByEmail("tequila@email.com");
-        System.out.println("IDDDDDDDDDDD" + user.get().getID());
         this.mvc.perform( MockMvcRequestBuilders
                 .delete("/users/"+ user.get().getID())
                 .header("Authorization", "Bearer " + token)
