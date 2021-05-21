@@ -107,7 +107,7 @@ public class BrandControllerTest {
 
     @Test
     @Transactional
-    public void unauthorizedGetAllUser() throws Exception {
+    public void unauthorizedGetAllBrands() throws Exception {
         this.mvc.perform( MockMvcRequestBuilders
                 .get("/brands")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -117,7 +117,7 @@ public class BrandControllerTest {
 
     @Test
     @Transactional
-    public void deleteUser() throws Exception {
+    public void deleteBrand() throws Exception {
         generaterUser();
         String token = obtainAccessToken("taina@email.com","TM@123");
         Brand brand = new Brand();
@@ -133,7 +133,7 @@ public class BrandControllerTest {
 
     @Test
     @Transactional
-    public void updateUser() throws Exception {
+    public void updateBrand() throws Exception {
         generaterUser();
         String token = obtainAccessToken("taina@email.com","TM@123");
         Brand brand = new Brand();
