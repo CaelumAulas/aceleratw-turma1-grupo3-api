@@ -1,6 +1,7 @@
-package com.br.latavelhaapi.service;
+package com.br.latavelhaapi.controller;
 
 import com.br.latavelhaapi.model.Brand;
+import com.br.latavelhaapi.service.BrandService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
